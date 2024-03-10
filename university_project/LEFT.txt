@@ -1,0 +1,4 @@
+Change Font Styles
+Load First media
+Change padding between contents
+Functionilized Progress bar

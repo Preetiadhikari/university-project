@@ -1,0 +1,458 @@
+@import "section.css";
+@import "musicPlayer.css";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s;
+}
+* ::-webkit-scrollbar {
+  width: 0;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(10, 24, 61);
+}
+
+.sideBar {
+  max-width: 300px;
+  width: 100%;
+  height: 100%;
+  background: rgb(8, 25, 45);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  border: 0;
+  border-right: 1px solid rgba(52, 58, 64, 0.4235294118);
+}
+.sideBar.open {
+  width: 100%;
+}
+.sideBar .topLogoArea {
+  display: flex;
+  width: 100%;
+  padding: 10px 0 10px 0;
+  height: 60px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+  cursor: pointer;
+}
+.sideBar .topLogoArea .imageFolder {
+  max-width: 40px;
+  height: 100%;
+  width: 100%;
+}
+.sideBar .topLogoArea .imageFolder img {
+  width: 100%;
+  filter: drop-shadow(0 0 30px rgb(206, 205, 205));
+}
+.sideBar .topLogoArea .textFolder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  color: #f8f9fa;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 17px;
+  padding-left: 10px;
+}
+.sideBar .menuContents {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sideBar .menuContents li {
+  list-style: none;
+  color: rgba(238, 238, 238, 0.521);
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+}
+.sideBar .menuContents li:active {
+  transform: scale(1.1);
+}
+.sideBar .menuContents li:active.material-icons {
+  transform: rotate(20deg);
+}
+.sideBar .menuContents li span {
+  height: 100%;
+  padding: 10px;
+  padding-right: 0;
+}
+.sideBar .menuContents li span.operation {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 10px;
+  padding-left: 0px;
+  margin-top: 1px;
+  font-size: initial;
+}
+.sideBar .menuContents li:hover, .sideBar .menuContents li.active {
+  background: rgba(52, 58, 64, 0.4235294118);
+}
+.sideBar .menuContents .vspacer {
+  height: 100%;
+  width: 100%;
+}
+.sideBar .menuContents .informations {
+  display: flex;
+  color: white;
+  gap: 10px;
+  justify-content: center;
+}
+.sideBar .menuContents .informations a {
+  text-decoration: none;
+  color: rgb(141, 139, 139);
+}
+.sideBar .menuContents .informations .icons {
+  display: none;
+}
+.sideBar .separator {
+  width: 100%;
+  padding: 1px;
+  background: rgba(52, 58, 64, 0.4235294118);
+  margin: 5px 0 10px 0;
+}
+.sideBar.close {
+  width: 85px;
+}
+.sideBar.close .topLogoArea {
+  display: flex;
+  justify-content: center;
+}
+.sideBar.close .textFolder, .sideBar.close .menuContents li .operation {
+  transform: scale(0);
+  font-size: 0;
+  width: 0;
+}
+.sideBar.close .menuContents .informations p, .sideBar.close .menuContents .informations a {
+  transform: scale(0);
+  font-size: 0;
+}
+.sideBar.close .menuContents .informations .icons {
+  padding: 10px 10px 10px 0;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-size: 23px;
+  transform: scale(1);
+  margin-top: -3px;
+}
+.sideBar.close .menuContents .informations .icons:active {
+  transform: scale(1.1);
+}
+
+.contentSec {
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+  overflow-y: visible;
+  position: relative;
+}
+.contentSec Message {
+  display: flex;
+  width: 100%;
+  background: rgb(4, 134, 156);
+  height: 40px;
+  padding: 10px;
+  color: rgba(255, 255, 255, 0.712);
+  font-weight: bold;
+}
+.contentSec Message span {
+  width: 100%;
+  text-align: center;
+  display: grid;
+  place-content: center;
+}
+.contentSec Message span.timeoutClose {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: block;
+}
+.contentSec .searchArea {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+.contentSec .searchArea .search_bar {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  max-width: 450px;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #333;
+  border-right: none;
+  background: rgb(8, 25, 45);
+  border-radius: 5px 0 0 5px;
+  color: rgba(255, 255, 255, 0.712);
+}
+.contentSec .searchArea .searchBtn {
+  border: 1px solid #333;
+  border-left: none;
+  width: 50px;
+  display: grid;
+  place-content: center;
+  color: white;
+  background-color: rgb(8, 25, 45);
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+.contentSec .searchArea .searchBtn:active {
+  font-size: 20px;
+}
+.contentSec .searchArea .queryArea {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.contentSec .searchArea .autoCompletion {
+  display: flex;
+  max-width: 500px;
+  max-height: 408px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  background-color: rgb(8, 25, 45);
+  border-radius: 5px;
+  padding: 10px;
+  flex-direction: column;
+  gap: 10px;
+}
+.contentSec .searchArea .autoCompletion li {
+  list-style: none;
+  padding: 10px;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  gap: 10px;
+  background: rgba(52, 58, 64, 0.4235294118);
+  cursor: pointer;
+}
+.contentSec .searchArea .autoCompletion li .imgArea {
+  height: 100%;
+  width: 50px;
+}
+.contentSec .searchArea .autoCompletion li .imgArea img {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+.contentSec .searchArea .autoCompletion li .details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.contentSec .searchArea .autoCompletion li .details .titleArea {
+  color: rgba(255, 255, 255, 0.726);
+  font-weight: bold;
+  max-width: 400px !important;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.contentSec .searchArea .autoCompletion li .details .miniDetails {
+  color: rgba(212, 209, 209, 0.336);
+  font-size: 11px;
+  margin-top: 2px;
+  line-height: 14px;
+}
+.contentSec .searchArea .search_bar[placeholder]:empty::before {
+  content: attr(placeholder);
+  color: rgba(238, 238, 238, 0.336);
+}
+.contentSec .separator, .contentSec .sep {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(52, 58, 64, 0.1764705882);
+  margin: 10px 0;
+  pointer-events: none;
+}
+.contentSec .separator.sep, .contentSec .sep.sep {
+  background-color: transparent !important;
+}
+.contentSec .contentPart {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.contentSec .contentPart div {
+  height: -webkit-fit-content !important;
+  height: -moz-fit-content !important;
+  height: fit-content !important;
+  padding: 10px 0;
+}
+.contentSec .contentPart div .heading {
+  width: 100%;
+  border-left: 7px solid rgba(255, 255, 255, 0.445);
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  -webkit-animation: expand 1s linear 0.5s forwards;
+          animation: expand 1s linear 0.5s forwards;
+}
+.contentSec .contentPart div .heading p {
+  padding: 0 17px;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgba(248, 249, 250, 0.4431372549);
+}
+.contentSec .contentPart div .heading .pov {
+  padding: 0 17px;
+  color: rgba(177, 177, 177, 0.774);
+}
+.contentSec .contentPart div .viewAll {
+  padding: 10px 0;
+  width: 100px;
+  background-color: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  color: white;
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.473);
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.contentSec .contentPart div .contents {
+  overflow: hidden;
+  margin-top: 10px;
+  height: 377px;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.contentSec .contentPart div .contents .items {
+  background: rgba(52, 58, 64, 0.4235294118);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  padding: 15px;
+  height: 366px;
+  width: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+  border-radius: 5px;
+}
+.contentSec .contentPart div .contents .items img {
+  height: 250px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.contentSec .contentPart div .contents .items .ratings {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  color: #2e363f;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.contentSec .contentPart div .contents .items .ratings span {
+  text-shadow: 0 0 20px rgb(63, 62, 62);
+  font-weight: bold;
+}
+.contentSec .contentPart div .contents .items .ratings span.views {
+  text-transform: capitalize;
+}
+.contentSec .contentPart div .contents .items h3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(248, 249, 250, 0.7725490196);
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  font-family: "Roboto", sans-serif;
+}
+.contentSec .contentPart div .contents .items .introductions {
+  color: rgba(255, 255, 255, 0.768627451);
+  justify-content: space-evenly;
+  gap: 2px;
+  margin-top: 5px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.contentSec .contentPart div .contents .items .introductions .channel {
+  font-family: "Roboto", sans-serif;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.contentSec .contentPart div .contents .items .introductions .date {
+  text-align: right;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-family: "Roboto", sans-serif;
+}
+.contentSec .contentPart div .contents .items .introductions p {
+  width: 100%;
+}
+
+@-webkit-keyframes expand {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes expand {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.debugmodeOn Message {
+  display: none;
+}
+.debugmodeOn .autoCompletion {
+  display: none !important;
+}/*# sourceMappingURL=style.css.map */

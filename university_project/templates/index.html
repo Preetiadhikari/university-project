@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/background.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/612f542d54.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Allan&family=Anton&family=Bebas+Neue&family=Courgette&family=Imbue&family=Kaushan+Script&family=Lobster&family=Nova+Square&family=Oswald:wght@300;400&family=PT+Sans+Narrow&family=Pathway+Gothic+One&family=Poppins&family=Potta+One&family=Righteous&family=Roboto:wght@300;400&family=Squada+One&family=Teko:wght@300;400&family=Trade+Winds&family=Yanone+Kaffeesatz:wght@400;500&family=Yellowtail&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+    <script src="js/audio.player.js" type="module" defer></script>
+    <script src="js/audiomanager.js" defer></script>
+    <title>Fantastic Music Player | v3.0.3</title>
+</head>
+
+<body class="debugmodeOn"> <!--class: debugmodeOn-->
+    <section class="content">
+        <section class="top-level">
+            <div class="sideBar close">
+                <div class="topLogoArea closeSideBar open">
+                    <div class="imageFolder">
+                        <img src="/assets/background.ico" alt="Logo is Loading">
+                    </div>
+                    <p class="textFolder">
+                        Fantastic Music Player
+                    </p>
+                </div>
+                <div class="separator"></div>
+                <div class="menuContents">
+                    <li class="active">
+                        <span class="material-icons">home</span>
+                        <span class="operation">Home</span>
+                    </li>
+                    <li>
+                        <span class="material-icons">featured_play_list</span>
+                        <span class="operation">Genre</span>
+                    </li>
+                    <li>
+                        <span class="material-icons">person</span>
+                        <span class="operation">Artist</span>
+                    </li>
+                    <li>
+                        <span class="material-icons">queue_music</span>
+                        <span class="operation">Playlists</span>
+                    </li>
+                    <li>
+                        <span class="material-icons">notifications</span>
+                        <span class="operation">Notifications</span>
+                    </li>
+                    <li>
+                        <span class="material-icons">settings</span>
+                        <span class="operation">Settings</span>
+                    </li>
+                    <div class="vspacer"></div>
+                    <div class="informations">
+                        <p>Preeti Adhikari</p>
+                        <a href="logout">Logout</a>
+                        <p class="material-icons icons">logout</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contentSec">
+                <div class="searchArea">
+                    <div class="queryArea">
+                        <div class="search_bar" contenteditable="true"
+                            placeholder="Search for your Favourite song, artist, etc." spellcheck="false"
+                            data-gramm="false" data-gramm-editor="false" data-enable-grammarly="false"></div>
+                        <span class="material-icons searchBtn">search</span>
+                    </div>
+                    <div class="autoCompletion">
+                        <li>
+                            <div class="imgArea">
+                                <img src="assets/Image-1.jpg" alt="">
+                            </div>
+                            <div class="details">
+                                <div class="titleArea">
+                                    How to create Online Music Streaming site | YouTubeSpecial
+                                </div>
+                                <div class="miniDetails">
+                                    <p class="channel">Sachin Acharya</p>
+                                    <p class="date">Nov 12, 2020 11:45 PM</p>
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+                <div class="separator"></div>
+                <div class="contentPart">
+                    <!-- Change as you wish -->
+                    <div class="discover playlist">
+                        <div class="heading">
+                            <p>Discover</p>
+                            <span class="pov">Discover new songs according to your preferences</span>
+                        </div>
+
+                        <div class="contents">
+                            <!--
+                                Content will be loaded programatically
+                            -->
+                        </div>
+                        <div class="viewAll">
+                            View All
+                        </div>
+                    </div>
+                    <div class="suggestions lega">
+                        <div class="heading">
+                            <p>Dauri</p>
+                            <span class="pov">Get new songs suggested according to your prefered genre, artist
+                                etc.</span>
+                        </div>
+                        <div class="contents">
+                            <!--
+                                Content will be loaded programatically
+                            -->
+                        </div>
+                        <div class="viewAll">
+                            View All
+                        </div>
+                    </div>
+                    <div class="sep"></div>
+                </div>
+
+                <div class="master-controls">
+                    <div class="progress-bar">
+                        <div class="time-indicator">
+                            <span>0:00</span>
+                            <span>1:12</span>
+                        </div>
+                        <div class="progress-juice"></div>
+
+                    </div>
+                    <div class="master-player">
+                        <div class="thumbnail parentof">
+                            <img src="/assets/Image-1.jpg" alt="Thumbnail is loading">
+                        </div>
+
+                        <div class="music-info">
+                            <div class="mtitle">
+                                <h1>On my way - Alan Walker</h1>
+                            </div>
+                            <div class="aname">
+                                <p>Alan Walker</p>
+                            </div>
+                        </div>
+
+                        <div class="mcontrols">
+                            <span class="material-icons arrow_back" onclick="playPrevious()">
+                                arrow_back
+                            </span>
+
+                            <span class="material-icons playPauseMedia" onclick="playPausemethod()">
+                                play_arrow
+                            </span>
+                            <span class="material-icons arrow_forward" onclick="playNext()">
+                                arrow_forward
+                            </span>
+                        </div>
+                        <div class="expansion">
+                            <span class="material-icons expand">
+                                open_in_full
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- </section> -->
+    </section>
+    <script src="/js/script.js"></script>
+</body>
+
+</html>
