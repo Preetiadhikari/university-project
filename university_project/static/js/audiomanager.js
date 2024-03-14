@@ -91,3 +91,47 @@ function playPrevious() {
     nextElement = document.querySelector(`[data-id='${currentCount}']`)
     loadMedia(nextElement, "https://www.youtube.com/watch?v=" + nextElement.getAttribute("data-vid"))
 }
+
+
+// DOM Selections
+const myProgress = document.getElementById("myProgress");
+const startTime = document.getElementById("startTime");
+const endTime = document.getElementById("endTime");
+
+// Audio metadata loaded event
+audioPlayer.addEventListener("loadedmetadata", () => {
+    // Set the max value of progress bar to audio duration
+    myProgress.max = audioPlayer.duration;
+    // Update end time
+    endTime.textContent = formatTime(audioPlayer.duration);
+});
+
+// Time update event
+audioPlayer.addEventListener("timeupdate", () => {
+    // Update progress bar value
+    myProgress.value = audioPlayer.currentTime;
+    // Update start time
+    startTime.textContent = formatTime(audioPlayer.currentTime);
+});
+
+// Change in progress bar
+myProgress.addEventListener("input", () => {
+    // Change audio current time based on progress bar value
+    audioPlayer.currentTime = myProgress.value;
+});
+
+// Function to format time
+const formatTime = (time) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = Math.floor(time % 60);
+
+    let formattedTime = "";
+
+    if (hours > 0) {
+        formattedTime += `${hours}:`;
+    }
+    formattedTime += `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+    return formattedTime;
+};
