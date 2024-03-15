@@ -26,28 +26,26 @@ function stop_audio() {
 }
 
 function loadMedia(domel, media_link) {
-    let isPaused = audioPlayer.paused
-    stop_audio()
+    let isPaused = audioPlayer.paused;
+    stop_audio();
     fetch("/playable_media", {
         method: "POST",
         body: JSON.stringify({
             media_link
         })
     })
-        .then(data => data.json())
-        .then(data => {
-            // console.log(domel)
-            const playable_link = data['playable_link']
-            audioPlayer.src = playable_link
-            mediaThumbnail.src = domel.querySelector("img").src
-            mediaTitle.textContent = domel.querySelector("h3").textContent
-            mediaTitle.textContent = domel.querySelector("h3").textContent
-            mediaChannel.textContent = domel.querySelector(".channel").textContent
-            if (!isPaused) {
-                audioPlayer.play()
-            }
-        })
+    .then(data => data.json())
+    .then(data => {
+        const playable_link = data['playable_link'];
+        audioPlayer.src = playable_link;
+        mediaThumbnail.src = domel.querySelector("img").src;
+        mediaTitle.textContent = domel.querySelector("h3").textContent;
+        mediaTitle.textContent = domel.querySelector("h3").textContent;
+        mediaChannel.textContent = domel.querySelector(".channel").textContent;
+        audioPlayer.play(); // Autoplay when selected
+    });
 }
+
 
 audioPlayer.addEventListener("playing", () => {
     playpauseBtn.textContent = "pause"
@@ -91,6 +89,66 @@ function playPrevious() {
     nextElement = document.querySelector(`[data-id='${currentCount}']`)
     loadMedia(nextElement, "https://www.youtube.com/watch?v=" + nextElement.getAttribute("data-vid"))
 }
+
+// DOM Selections
+const repeatBtn = document.getElementById("repeatBtn");
+
+// Variable to track if repeat mode is active
+let isRepeatActive = false;
+
+// Event listener for the repeat button
+function toggleRepeat() {
+    isRepeatActive = !isRepeatActive; // Toggle repeat mode
+
+    if (isRepeatActive) {
+        repeatBtn.style.color = "lime"; // Change button color to aqua when repeat is active
+    } else {
+        repeatBtn.style.color = ""; // Reset button color when repeat is inactive
+    }
+}
+
+// Event listener for the repeat button
+repeatBtn.addEventListener("click", () => {
+    toggleRepeat();
+});
+
+// Event listener for the audio ended event
+audioPlayer.addEventListener("ended", () => {
+    if (isRepeatActive) {
+        audioPlayer.play(); // Repeat the current audio when repeat mode is active
+    } else {
+        playNext(); // Play the next audio when repeat mode is not active
+    }
+});
+function loadAndAutoplay(domel, media_link) {
+    let isPaused = audioPlayer.paused;
+    stop_audio();
+    fetch("/playable_media", {
+        method: "POST",
+        body: JSON.stringify({
+            media_link
+        })
+    })
+    .then(data => data.json())
+    .then(data => {
+        const playable_link = data['playable_link'];
+        audioPlayer.src = playable_link;
+        mediaThumbnail.src = domel.querySelector("img").src;
+        mediaTitle.textContent = domel.querySelector("h3").textContent;
+        mediaTitle.textContent = domel.querySelector("h3").textContent;
+        mediaChannel.textContent = domel.querySelector(".channel").textContent;
+        if (!isPaused) {
+            audioPlayer.play();
+        }else{
+            audioPlayer.autoplay = true;
+        }
+    });
+}
+function handleSongSelection(domel) {
+    const media_link = "https://www.youtube.com/watch?v=" + domel.getAttribute("data-vid");
+    loadAndAutoplay(domel, media_link);
+}
+
 
 
 // DOM Selections

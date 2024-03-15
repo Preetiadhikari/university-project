@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url("./assets/itl.cat_boombox-wallpaper_996630.png");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        color: #333;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(100px);
+    }
+
+    h3 {
+        max-width: 100%;
+        text-align: center;
+        color: #555;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        padding: 8px 30px 8px 8px; /* Increased padding for the eye icon */
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        outline: none;
+        width: 260px;
+    }
+
+    button {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #555;
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 10px;
+        height: auto;
+    }
+
+    .checkbox-container label {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .separator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0;
+        color: #ccc;
+    }
+
+    .separator .line {
+        flex-grow: 1;
+        height: 1px;
+        background-color: #ccc;
+        margin: 0 10px;
+    }
+
+    .social-login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .google-login,
+    .facebook-login {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .google-login:hover,
+    .facebook-login:hover {
+        background-color: #555;
+    }
+
+    .signup-link , .forgot-password{
+        text-align: center;
+        margin-top: 10px;
+        display: block;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .forgot-password, .signup-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Eye icon styles */
+    .eye-icon {
+        position: absolute;
+        top: 35%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 20px;
+        color: #aaa;
+    }
+</style>
+<body>
+<div class="login">
+    <!-- Background image and container div -->
+    <div class="container">
+        <h3>Divine Music Player</h3>
+        <h1>Login</h1>
+        <form action="/login" method="POST" class="login-form">
+            <!-- Login form content -->
+            <div id="error" class="error"></div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <div style="position: relative;">
+                <input type="password" id="password" name="password" required>
+                <i class="eyeicon material-icons eye-icon" onclick="togglePasswordVisibility()">visibility</i>
+            </div>
+            <button type="submit">Login</button>
+            <div class="checkbox-container">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe" class="text-sm">Remember Me</label>
+            </div>
+        </form>
+        <div class="separator">
+            <!-- Separator line -->
+            <div class="line"></div>
+            <p>or</p>
+            <div class="line"></div>
+        </div>
+        <div class="social-login">
+            <!-- Social login buttons -->
+            <button type="submit" class="google-login">Continue with Google</button>
+            <button type="submit" class="facebook-login">Continue with Facebook</button>
+        </div>
+        <a href="#" class="forgot-password">Forgot Password?</a>
+        <a href="#" class="signup-link" onclick="toggleForms()">Don't have an account? Sign Up</a> <!-- Link to toggle to signup page -->
+    </div>
+</div>
+<div class="login" style="display: none;">
+    <!-- Background image and container div -->
+    <div class="container">
+        <h3>Divine Music Player</h3>
+        <h1>Sign Up</h1>
+        <form action="/signup" method="POST" class="signup-form">
+            <!-- Signup form content -->
+            <div id="error" class="error"></div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <div style="position: relative;">
+                <input type="password" id="password" name="password" required>
+                <i class="eyeicon material-icons eye-icon" onclick="togglePasswordVisibility()">visibility</i>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <a href="#" class="signup-link" onclick="toggleForms()">Already have an account? Log In</a> <!-- Link to toggle to login page -->
+    </div>
+</div>
+<script>
+    function toggleForms() {
+        const loginForm = document.querySelector('.login');
+        const signupForm = document.querySelectorAll('.login')[1];
+
+        if (loginForm.style.display === 'none') {
+            loginForm.style.display = 'flex'; // Show login form
+            signupForm.style.display = 'none'; // Hide signup form
+        } else {
+            loginForm.style.display = 'none'; // Hide login form
+            signupForm.style.display = 'flex'; // Show signup form
+        }
+    }
+
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.querySelector('.eye-icon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.textContent = 'visibility_off';
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.textContent = 'visibility';
+        }
+    }
+</script>
+</body>
+</html>

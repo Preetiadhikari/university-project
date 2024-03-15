@@ -1,58 +1,96 @@
-from flask import Flask, url_for, render_template, request, jsonify
-from youtubesearchpython import Playlist, ResultMode, Video, StreamURLFetcher
+from flask import Flask, url_for, render_template, request, jsonify, redirect, session
+from youtubesearchpython import Playlist, ResultMode
 from pytube import YouTube
 import json
 from colorama import init, Fore
 
 init(autoreset=True)
-# import asyncio
 
+# Initialize Flask app
+app = Flask(__name__, static_url_path="", static_folder="static")
+app.secret_key = 'your_secret_key'  # Change this to a more secure secret key
 
-url_fetcher = StreamURLFetcher()
+# User database for demonstration purposes (replace with a proper database in production)
+users = {
+    'preeti': 'preetipreeti',
+    'aditya': 'adityaaditya',
+    'suraz' : "surazsuraz",
+}
 
-# Change as you wish
+# Sample playlist URLs
 temp_genre = {
     "playlist": "https://www.youtube.com/playlist?list=PLqtDR0dCdvEMS_n4bf0jWjX8IddcGpnVU",
     "lega": "https://www.youtube.com/playlist?list=PLqtDR0dCdvENYlQp74ayGl1WjC4tmY53C",
 }
 
-app = Flask(__name__, static_url_path="", static_folder="static")
+# Routes for login, signup, and main pages
 
 
-def printx(value):
-    print(f"{Fore.LIGHTCYAN_EX}{value}")
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        if username in users and users[username] == password:
+            # Successful login, store username in session and redirect to main page
+            session['username'] = username
+            return redirect(url_for('main'))
+        else:
+            # Failed login, show login page with error message
+            return render_template('login.html', error='Invalid username or password')
+    else:
+        return render_template('login.html', error=None)
 
 
-def record_object(data):
-    with open("data.json", "w") as file:
-        file.seek(0)
-        file.truncate()
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        # Check if username already exists
+        if username in users:
+            return render_template('signup.html', error="Username already exists")
+        else:
+            # Add the new user to the user list (for demonstration purposes)
+            users[username] = password
+            # Redirect to the login page after successful signup
+            return redirect(url_for('login'))
+    else:
+        return render_template('signup.html', error=None)
 
-        json.dump(data, file, indent=4)
+
+@app.route("/logout")
+def logout():
+    # Clear the session and redirect to the login page
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
 
-# OKAY
 @app.route("/get_media", methods=["POST"])
 def get_media():
-    playlist_url = temp_genre[request.get_json(force=True)["genre"]]
-    playlists = Playlist.getVideos(playlist_url, mode=ResultMode.dict)
-    return playlists
+    if 'username' in session:
+        playlist_url = temp_genre[request.get_json(force=True)["genre"]]
+        playlists = Playlist.getVideos(playlist_url, mode=ResultMode.dict)
+        return playlists
+    else:
+        return jsonify({'error': 'Unauthorized access'}), 401
 
 
 @app.route("/playable_media", methods=["POST"])
 def playMedia():
-    playurl = (
-        YouTube(request.get_json(force=True)["media_link"]).streams.get_audio_only().url
-    )
-    # video = Video.get(request.get_json(force=True)['media_link'])
-    # videoData = url_fetcher.get(video, 139)
-    # # record_object(videoData)
-    return jsonify({"playable_link": playurl})
+    if 'username' in session:
+        playurl = YouTube(request.get_json(force=True)["media_link"]).streams.get_audio_only().url
+        return jsonify({"playable_link": playurl})
+    else:
+        return jsonify({'error': 'Unauthorized access'}), 401
 
 
 @app.route("/")
 def main():
-    return render_template("index.html")
+    if 'username' in session:
+        return render_template("index.html")
+    else:
+        return redirect(url_for('login'))
 
 
 if __name__ == "__main__":
